@@ -13,22 +13,28 @@ import android.view.MenuItem;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Leon on 25.01.2016.
  */
 public class MainActivity extends AppCompatActivity {
 
-    private MaterialSearchView mSearchView;
-    private Toolbar mToolbar;
-    private DrawerLayout mDrawerLayout;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+    @Bind(R.id.search_view) MaterialSearchView mSearchView;
+    @Bind(R.id.toolbar) Toolbar mToolbar;
+    @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @Bind(R.id.tab_layout) TabLayout mTabLayout;
+    @Bind(R.id.view_pager) ViewPager mViewPager;
+    @Bind(R.id.navigation) NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ac_main_layout);
+        setContentView(R.layout.ac_main_);
+
+        ButterKnife.bind(this);
 
         initToolbar();
         initSearchView();
@@ -48,14 +54,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
     }
 
     private void initSearchView() {
-        mSearchView = (MaterialSearchView) findViewById(R.id.search_view);
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -82,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNavigationView() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
@@ -91,14 +94,14 @@ public class MainActivity extends AppCompatActivity {
                 R.string.view_navigation_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 mDrawerLayout.closeDrawers();
                 switch (item.getItemId()) {
                     case R.id.favorite:
                         // TODO: 26.01.2016 start Favorite activity
+
                 }
                 return true;
             }
@@ -107,10 +110,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTabs() {
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
         TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);
 
     }

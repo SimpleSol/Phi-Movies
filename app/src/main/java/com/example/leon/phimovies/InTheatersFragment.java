@@ -9,10 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Leon on 26.01.2016.
  */
 public class InTheatersFragment extends Fragment {
+
+    @Bind(R.id.in_theaters_recycler_view) RecyclerView mRecyclerView;
 
     private String[] mTestUris = {
             "http://st.kp.yandex.net/images/film_iphone/iphone360_713051.jpg",
@@ -27,7 +32,7 @@ public class InTheatersFragment extends Fragment {
             "http://st.kp.yandex.net/images/film_iphone/iphone360_819101.jpg"
     };
 
-    private View mView;
+
 
     public static InTheatersFragment getInstance() {
         return new InTheatersFragment();
@@ -36,18 +41,20 @@ public class InTheatersFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fmt_in_theaters_layout, container, false);
-        return mView;
+        return inflater.inflate(R.layout.fmt_in_theaters, container, false);
+
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.in_theaters_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+        ButterKnife.bind(this, view);
+
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         MainAdapter adapter = new MainAdapter(mTestUris);
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(adapter);
     }
 }
