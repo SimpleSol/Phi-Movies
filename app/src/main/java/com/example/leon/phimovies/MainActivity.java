@@ -2,8 +2,6 @@ package com.example.leon.phimovies;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,22 +22,26 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.search_view) MaterialSearchView mSearchView;
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-    @Bind(R.id.tab_layout) TabLayout mTabLayout;
-    @Bind(R.id.view_pager) ViewPager mViewPager;
+
     @Bind(R.id.navigation) NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ac_main_);
+        setContentView(R.layout.ac_main);
 
         ButterKnife.bind(this);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_view, new MainFragment())
+                    .commit();
+        }
 
         initToolbar();
         initSearchView();
         initNavigationView();
-        initTabs();
 
     }
 
@@ -100,8 +102,15 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
                 switch (item.getItemId()) {
                     case R.id.favorite:
-                        // TODO: 26.01.2016 start Favorite activity
-
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container_view, new FavoriteFragment())
+                                .commit();
+                        break;
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container_view, new MainFragment())
+                                .commit();
+                        break;
                 }
                 return true;
             }
@@ -109,10 +118,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initTabs() {
-        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(adapter);
-        mTabLayout.setupWithViewPager(mViewPager);
 
-    }
 }
