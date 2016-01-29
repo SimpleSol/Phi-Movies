@@ -14,16 +14,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Leon on 28.01.2016.
+ * Created by Leon on 29.01.2016.
  */
-public class FavoriteFragment extends Fragment {
+public class DetailsFragment extends Fragment {
 
-    @Bind(R.id.favorite_poster) SimpleDraweeView mPoster;
+    @Bind(R.id.details_poster) SimpleDraweeView mPoster;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fmt_favorite, container, false);
+        return inflater.inflate(R.layout.fmt_details, container, false);
     }
 
     @Override

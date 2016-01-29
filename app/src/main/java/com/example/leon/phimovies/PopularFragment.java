@@ -17,14 +17,14 @@ import butterknife.ButterKnife;
 /**
  * Created by Leon on 26.01.2016.
  */
-public class InTheatersFragment extends Fragment implements MainContract{
+public class PopularFragment extends Fragment implements MainContract{
 
     @Bind(R.id.in_theaters_recycler_view) RecyclerView mRecyclerView;
 
-    private InTheatersPresenter mPresenter;
+    private PopularPresenter mPresenter;
 
-    public static InTheatersFragment getInstance() {
-        return new InTheatersFragment();
+    public static PopularFragment getInstance() {
+        return new PopularFragment();
     }
 
     @Nullable
@@ -43,7 +43,7 @@ public class InTheatersFragment extends Fragment implements MainContract{
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        mPresenter = new InTheatersPresenter(this);
+        mPresenter = new PopularPresenter(this);
         mPresenter.loadMovie();
     }
 

@@ -8,33 +8,35 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.List;
+
 /**
  * Created by Leon on 26.01.2016.
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
-    private String[] mTestUris;
+    private List<String> mPosters;
 
-    public MainAdapter(String[] testUris) {
-        mTestUris = testUris;
+    public MainAdapter(List<String> posters) {
+        mPosters = posters;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fresco_simple_drawee_view, parent, false);
+                .inflate(R.layout.grid_item_main, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Uri uri = Uri.parse(mTestUris[position]);
+        Uri uri = Uri.parse("http://image.tmdb.org/t/p/w300" + mPosters.get(position));
         holder.mDraweeView.setImageURI(uri);
     }
 
     @Override
     public int getItemCount() {
-        return mTestUris.length;
+        return mPosters.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

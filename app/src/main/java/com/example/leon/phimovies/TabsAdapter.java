@@ -25,7 +25,7 @@ public class TabsAdapter extends FragmentPagerAdapter{
             case 0:
                 return InTheatersFragment.getInstance();
             case 1:
-                return InTheatersFragment.getInstance();
+                return PopularFragment.getInstance();
         }
         return null;
     }
