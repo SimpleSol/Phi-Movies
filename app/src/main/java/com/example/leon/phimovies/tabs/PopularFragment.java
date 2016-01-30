@@ -1,27 +1,21 @@
-package com.example.leon.phimovies;
+package com.example.leon.phimovies.tabs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import com.example.leon.phimovies.R;
+import com.example.leon.phimovies.mvp.MainPresenter;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by Leon on 26.01.2016.
  */
-public class PopularFragment extends Fragment implements MainContract{
-
-    @Bind(R.id.in_theaters_recycler_view) RecyclerView mRecyclerView;
-
-    private PopularPresenter mPresenter;
+public class PopularFragment extends BaseTabFragment {
 
     public static PopularFragment getInstance() {
         return new PopularFragment();
@@ -43,13 +37,25 @@ public class PopularFragment extends Fragment implements MainContract{
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        mPresenter = new PopularPresenter(this);
-        mPresenter.loadMovie();
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                getActivity(),
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        showDetails(mMovies, position);
+                    }
+
+                    @Override
+                    public void onItemLongPress(View childView, int position) {
+
+                    }
+                }
+        ));
+
+        mPresenter = new MainPresenter(this);
+        mPresenter.loadMovie("popularity.desc",
+                "19ebd84dd0335ec8d6d277b2d60e9724");
     }
 
-    @Override
-    public void putData(List<String> posters) {
-        MainAdapter adapter = new MainAdapter(posters);
-        mRecyclerView.setAdapter(adapter);
-    }
+
 }

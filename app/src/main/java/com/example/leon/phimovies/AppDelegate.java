@@ -2,6 +2,7 @@ package com.example.leon.phimovies;
 
 import android.app.Application;
 
+import com.example.leon.phimovies.retrofit.ApiInterface;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import retrofit.GsonConverterFactory;

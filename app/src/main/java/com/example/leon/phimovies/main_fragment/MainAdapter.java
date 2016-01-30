@@ -1,17 +1,20 @@
-package com.example.leon.phimovies;
+package com.example.leon.phimovies.main_fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.leon.phimovies.tabs.InTheatersFragment;
+import com.example.leon.phimovies.tabs.PopularFragment;
+
 /**
  * Created by Leon on 26.01.2016.
  */
-public class TabsAdapter extends FragmentPagerAdapter{
+public class MainAdapter extends FragmentPagerAdapter{
 
     private String[] mTabs;
 
-    public TabsAdapter(FragmentManager fm) {
+    public MainAdapter(FragmentManager fm) {
         super(fm);
         mTabs = new String[] {
                 "In Theaters",

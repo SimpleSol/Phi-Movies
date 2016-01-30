@@ -1,4 +1,4 @@
-package com.example.leon.phimovies;
+package com.example.leon.phimovies.retrofit;
 
 import retrofit.Call;
 import retrofit.http.GET;

@@ -1,4 +1,4 @@
-package com.example.leon.phimovies;
+package com.example.leon.phimovies.main_fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.leon.phimovies.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,7 +41,7 @@ public class MainFragment extends Fragment {
     }
 
     private void initTabs() {
-        TabsAdapter adapter = new TabsAdapter(getChildFragmentManager());
+        MainAdapter adapter = new MainAdapter(getChildFragmentManager());
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }

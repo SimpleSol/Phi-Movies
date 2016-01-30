@@ -1,4 +1,4 @@
-package com.example.leon.phimovies;
+package com.example.leon.phimovies.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.leon.phimovies.R;
+import com.example.leon.phimovies.favorite_fragment.FavoriteFragment;
+import com.example.leon.phimovies.main_fragment.MainFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.Bind;
@@ -119,6 +122,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 
 }

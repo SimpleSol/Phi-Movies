@@ -1,4 +1,4 @@
-package com.example.leon.phimovies;
+package com.example.leon.phimovies.retrofit;
 
 import com.google.gson.annotations.SerializedName;
 

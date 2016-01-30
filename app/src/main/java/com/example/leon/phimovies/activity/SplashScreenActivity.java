@@ -1,10 +1,12 @@
-package com.example.leon.phimovies;
+package com.example.leon.phimovies.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+
+import com.example.leon.phimovies.R;
 
 /**
  * Created by Leon on 25.01.2016.

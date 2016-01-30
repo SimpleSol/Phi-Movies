@@ -1,4 +1,4 @@
-package com.example.leon.phimovies;
+package com.example.leon.phimovies.retrofit;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -18,6 +18,17 @@ public class Movie {
 
     @SerializedName("original_title")
     private String mTitle;
+
+    public String getRating() {
+        return mRating;
+    }
+
+    public void setRating(String rating) {
+        mRating = rating;
+    }
+
+    @SerializedName("vote_average")
+    private String mRating;
 
     public String getPoster() {
         return mPoster;
