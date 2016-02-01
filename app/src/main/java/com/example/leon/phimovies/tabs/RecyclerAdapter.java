@@ -12,6 +12,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Leon on 26.01.2016.
  */
@@ -31,9 +34,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
         Uri uri = Uri.parse("http://image.tmdb.org/t/p/w300" + mMovies.get(position).getPoster());
-        holder.mDraweeView.setImageURI(uri);
+        viewHolder.mPoster.setImageURI(uri);
     }
 
     @Override
@@ -42,10 +45,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private SimpleDraweeView mDraweeView;
+        @Bind(R.id.simple_drawee_view)
+        SimpleDraweeView mPoster;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            mDraweeView = (SimpleDraweeView) itemView.findViewById(R.id.simple_drawee_view);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

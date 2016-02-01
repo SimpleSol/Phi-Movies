@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.details_fragment.DetailsFragment;
-import com.example.leon.phimovies.mvp.MainContract;
 import com.example.leon.phimovies.mvp.MainPresenter;
+import com.example.leon.phimovies.mvp.MainView;
 import com.example.leon.phimovies.retrofit.Movie;
 
 import java.util.List;
@@ -16,14 +16,12 @@ import butterknife.Bind;
 /**
  * Created by Leon on 30.01.2016.
  */
-public class BaseTabFragment extends Fragment implements MainContract {
-
-    @Bind(R.id.in_theaters_recycler_view)
-    RecyclerView mRecyclerView;
+public class BaseTabFragment extends Fragment implements MainView {
 
     protected MainPresenter mPresenter;
-
     protected List<Movie> mMovies;
+    @Bind(R.id.in_theaters_recycler_view)
+    RecyclerView mRecyclerView;
 
     protected void showDetails(List<Movie> movies, int position) {
         Movie movie = movies.get(position);

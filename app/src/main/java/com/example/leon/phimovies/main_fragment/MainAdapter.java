@@ -10,13 +10,13 @@ import com.example.leon.phimovies.tabs.PopularFragment;
 /**
  * Created by Leon on 26.01.2016.
  */
-public class MainAdapter extends FragmentPagerAdapter{
+public class MainAdapter extends FragmentPagerAdapter {
 
     private String[] mTabs;
 
     public MainAdapter(FragmentManager fm) {
         super(fm);
-        mTabs = new String[] {
+        mTabs = new String[]{
                 "In Theaters",
                 "Popular"
         };

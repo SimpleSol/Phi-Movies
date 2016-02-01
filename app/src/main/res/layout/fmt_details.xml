@@ -58,6 +58,17 @@
             android:layout_below="@id/details_poster"
             />
 
+        <Button
+            android:id="@+id/button_add"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
+            android:layout_below="@id/details_overview"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="add"/>
+
 
     </RelativeLayout>
 

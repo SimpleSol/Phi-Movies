@@ -22,11 +22,15 @@ import butterknife.ButterKnife;
  */
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.search_view) MaterialSearchView mSearchView;
-    @Bind(R.id.toolbar) Toolbar mToolbar;
-    @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @Bind(R.id.search_view)
+    MaterialSearchView mSearchView;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
-    @Bind(R.id.navigation) NavigationView mNavigationView;
+    @Bind(R.id.navigation)
+    NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

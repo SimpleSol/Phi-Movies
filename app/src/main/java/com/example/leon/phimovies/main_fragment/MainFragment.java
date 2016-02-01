@@ -19,8 +19,10 @@ import butterknife.ButterKnife;
  */
 public class MainFragment extends Fragment {
 
-    @Bind(R.id.tab_layout) TabLayout mTabLayout;
-    @Bind(R.id.view_pager) ViewPager mViewPager;
+    @Bind(R.id.tab_layout)
+    TabLayout mTabLayout;
+    @Bind(R.id.view_pager)
+    ViewPager mViewPager;
 
     @Nullable
     @Override

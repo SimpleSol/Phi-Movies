@@ -1,11 +1,22 @@
 package com.example.leon.phimovies.retrofit;
 
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.BaseColumns;
+
+import com.example.leon.phimovies.sqlite.SQLiteProvider;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by Leon on 29.01.2016.
  */
-public class Movie {
+public class Movie implements Serializable {
+
+    public static final String TABLE = "movies";
+
+    public static final Uri URI = Uri.parse("content://" + SQLiteProvider.AUTHORITY + "/" + TABLE);
 
     @SerializedName("poster_path")
     private String mPoster;
@@ -18,6 +29,17 @@ public class Movie {
 
     @SerializedName("original_title")
     private String mTitle;
+    @SerializedName("vote_average")
+    private String mRating;
+
+    public static Movie fromCursor(Cursor cursor) {
+        Movie movie = new Movie();
+        movie.setTitle(cursor.getString(cursor.getColumnIndex(Columns.TITLE)));
+        movie.setPoster(cursor.getString(cursor.getColumnIndex(Columns.POSTER)));
+        movie.setRating(cursor.getString(cursor.getColumnIndex(Columns.RATING)));
+        movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(Columns.RELEASE_DATE)));
+        return movie;
+    }
 
     public String getRating() {
         return mRating;
@@ -26,9 +48,6 @@ public class Movie {
     public void setRating(String rating) {
         mRating = rating;
     }
-
-    @SerializedName("vote_average")
-    private String mRating;
 
     public String getPoster() {
         return mPoster;
@@ -60,5 +79,13 @@ public class Movie {
 
     public void setTitle(String title) {
         mTitle = title;
+    }
+
+    public interface Columns extends BaseColumns {
+        String TITLE = "title";
+        String RATING = "rating";
+        String OVERVIEW = "overview";
+        String POSTER = "poster";
+        String RELEASE_DATE = "release_date";
     }
 }

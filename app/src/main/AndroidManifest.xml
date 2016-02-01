@@ -20,6 +20,11 @@
 
         <activity android:name=".activity.MainActivity"/>
 
+        <provider
+            android:authorities="${applicationId}"
+            android:name=".sqlite.SQLiteProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

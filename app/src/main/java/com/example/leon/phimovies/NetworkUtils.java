@@ -28,11 +28,11 @@ public class NetworkUtils {
                 .build();
     }
 
-    public static NetworkUtils getInstance(){
+    public static NetworkUtils getInstance() {
         return Holder.INSTANCE;
     }
 
-    private static OkHttpClient buildClient(){
+    private static OkHttpClient buildClient() {
         final OkHttpClient client = new OkHttpClient();
         client.setReadTimeout(READ_TIMEOUT, TimeUnit.SECONDS);
         client.setConnectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);
@@ -46,7 +46,7 @@ public class NetworkUtils {
         return client;
     }
 
-    public <T> T getService(Class<T> clazz){
+    public <T> T getService(Class<T> clazz) {
         return mRetrofit.create(clazz);
     }
 
