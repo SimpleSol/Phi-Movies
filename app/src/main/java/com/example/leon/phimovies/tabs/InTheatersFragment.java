@@ -55,9 +55,7 @@ public class InTheatersFragment extends BaseTabFragment {
 
         // TODO: 30.01.2016 replace hardcoded date with actual date / remove hardcode in general
         mPresenter = new MainPresenter(this);
-        mPresenter.loadMovie("2016-01-01",
-                "2016-01-29",
-                "19ebd84dd0335ec8d6d277b2d60e9724");
+        mPresenter.loadMovie("2016-01-01", "2016-01-29", String.valueOf(mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
     }
 
 

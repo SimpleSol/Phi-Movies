@@ -38,6 +38,7 @@ public class Movie implements Serializable {
         movie.setPoster(cursor.getString(cursor.getColumnIndex(Columns.POSTER)));
         movie.setRating(cursor.getString(cursor.getColumnIndex(Columns.RATING)));
         movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(Columns.RELEASE_DATE)));
+        movie.setOverview(cursor.getString(cursor.getColumnIndex(Columns.OVERVIEW)));
         return movie;
     }
 

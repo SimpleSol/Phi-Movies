@@ -22,6 +22,7 @@ public class BaseTabFragment extends Fragment implements MainView {
     protected List<Movie> mMovies;
     @Bind(R.id.in_theaters_recycler_view)
     RecyclerView mRecyclerView;
+    protected int mPage = 1;
 
     protected void showDetails(List<Movie> movies, int position) {
         Movie movie = movies.get(position);

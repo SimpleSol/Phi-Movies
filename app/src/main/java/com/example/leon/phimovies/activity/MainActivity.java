@@ -105,24 +105,21 @@ public class MainActivity extends AppCompatActivity {
                 R.string.view_navigation_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                mDrawerLayout.closeDrawers();
-                switch (item.getItemId()) {
-                    case R.id.favorite:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container_view, new FavoriteFragment())
-                                .commit();
-                        break;
-                    case R.id.home:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container_view, new MainFragment())
-                                .commit();
-                        break;
-                }
-                return true;
+        mNavigationView.setNavigationItemSelectedListener(item -> {
+            mDrawerLayout.closeDrawers();
+            switch (item.getItemId()) {
+                case R.id.favorite:
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_view, new FavoriteFragment())
+                            .commit();
+                    break;
+                case R.id.home:
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_view, new MainFragment())
+                            .commit();
+                    break;
             }
+            return true;
         });
 
     }

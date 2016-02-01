@@ -53,8 +53,7 @@ public class PopularFragment extends BaseTabFragment {
         ));
 
         mPresenter = new MainPresenter(this);
-        mPresenter.loadMovie("popularity.desc",
-                "19ebd84dd0335ec8d6d277b2d60e9724");
+        mPresenter.loadMovie("popularity.desc", String.valueOf(mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
     }
 
 

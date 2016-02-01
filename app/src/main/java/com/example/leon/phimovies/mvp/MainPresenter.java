@@ -31,8 +31,8 @@ public class MainPresenter {
     }
 
     public void loadMovie(String... params) {
-        if (params.length == 2) { // loading popular movies
-            mService.getMovies(params[0], params[1])
+        if (params.length == 3) { // loading popular movies
+            mService.getMovies(params[0], params[1], params[2])
                     .flatMap(apiResponse -> {
                         Log.d(TAG, "call: " + Thread.currentThread().getName());
                         return Observable.just(apiResponse.getMovies());
@@ -101,8 +101,8 @@ public class MainPresenter {
 //
 //                }
 //            });
-        } else if (params.length == 3) { //loading in theater movies
-            mService.getMovies(params[0], params[1], params[2])
+        } else if (params.length == 4) { //loading in theater movies
+            mService.getMovies(params[0], params[1], params[2], params[3])
                     .flatMap(apiResponse ->
                             Observable.just(apiResponse.getMovies()))
                     .subscribeOn(Schedulers.io())
