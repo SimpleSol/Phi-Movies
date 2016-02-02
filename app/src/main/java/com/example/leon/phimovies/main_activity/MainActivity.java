@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.favorite_fragment.FavoriteFragment;
 import com.example.leon.phimovies.main_fragment.MainFragment;
+import com.example.leon.phimovies.search_result_fragment.SearchResultFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.Bind;
@@ -72,8 +73,11 @@ public class MainActivity extends AppCompatActivity {
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-                return false;
+                getSupportFragmentManager().beginTransaction()
+                        .addToBackStack(SearchResultFragment.class.getName())
+                        .replace(R.id.container_view, SearchResultFragment.getInstance(query))
+                        .commit();
+                return true;
             }
 
             @Override
@@ -82,18 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-//        mSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-//            @Override
-//            public void onSearchViewShown() {
-//
-//            }
-//
-//            @Override
-//            public void onSearchViewClosed() {
-//
-//            }
-//        });
     }
 
     private void initNavigationView() {

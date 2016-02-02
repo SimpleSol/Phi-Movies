@@ -1,4 +1,4 @@
-package com.example.leon.phimovies.tabs;
+package com.example.leon.phimovies.tabs.popular_fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.details_activity.DetailsActivity;
 import com.example.leon.phimovies.retrofit.Movie;
+import com.example.leon.phimovies.tabs.RecyclerGridAdapter;
+import com.example.leon.phimovies.tabs.RecyclerItemClickListener;
 
 import java.util.List;
 
@@ -22,11 +24,11 @@ import butterknife.ButterKnife;
 /**
  * Created by Leon on 26.01.2016.
  */
-public class PopularFragment extends Fragment implements MainView {
+public class PopularFragment extends Fragment implements PopularView {
 
     private static final String KEY_MOVIE = "MOVIE";
     private static final String TAG = PopularFragment.class.getName();
-    private MainPresenter mPresenter;
+    private PopularPresenter mPresenter;
     private int mPage = 1;
     private GridLayoutManager mGridLayoutManager;
     @Bind(R.id.in_theaters_recycler_view)
@@ -41,7 +43,7 @@ public class PopularFragment extends Fragment implements MainView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fmt_in_theaters, container, false);
+        return inflater.inflate(R.layout.fmt_grid_layout, container, false);
 
     }
 
@@ -78,8 +80,8 @@ public class PopularFragment extends Fragment implements MainView {
 
         mAdapter = new RecyclerGridAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        mPresenter = new MainPresenter(this);
-        mPresenter.loadMovies("popularity.desc", String.valueOf(mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
+        mPresenter = new PopularPresenter(this);
+        mPresenter.loadPopularResults("popularity.desc", String.valueOf(mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
 
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -89,7 +91,7 @@ public class PopularFragment extends Fragment implements MainView {
                 if (mGridLayoutManager.findLastVisibleItemPosition() > (mAdapter.getItemCount() / 2)
                         && !mIsLoading) {
                     mIsLoading = true;
-                    mPresenter.loadMovies("popularity.desc", String.valueOf(++mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
+                    mPresenter.loadPopularResults("popularity.desc", String.valueOf(++mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
                 }
             }
 
@@ -110,7 +112,7 @@ public class PopularFragment extends Fragment implements MainView {
     }
 
     @Override
-    public void putData(List<Movie> movies) {
+    public void putPopularData(List<Movie> movies) {
         mAdapter.addList(movies);
         mIsLoading = false;
     }

@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.leon.phimovies.tabs.InTheatersFragment;
-import com.example.leon.phimovies.tabs.PopularFragment;
+import com.example.leon.phimovies.tabs.in_theaters_fragment.InTheatersFragment;
+import com.example.leon.phimovies.tabs.popular_fragment.PopularFragment;
 
 /**
  * Created by Leon on 26.01.2016.
