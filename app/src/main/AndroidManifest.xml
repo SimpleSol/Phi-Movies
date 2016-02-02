@@ -11,14 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.SplashScreenActivity">
+        <activity android:name=".splash_screen_activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".main_activity.MainActivity"/>
+
+        <activity android:name=".details_activity.DetailsActivity" />
 
         <provider
             android:authorities="${applicationId}"

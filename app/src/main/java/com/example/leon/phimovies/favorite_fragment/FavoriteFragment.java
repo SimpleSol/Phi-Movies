@@ -1,6 +1,7 @@
 package com.example.leon.phimovies.favorite_fragment;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,21 +9,24 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.leon.phimovies.R;
-import com.example.leon.phimovies.details_fragment.DetailsFragment;
+import com.example.leon.phimovies.details_activity.DetailsActivity;
 import com.example.leon.phimovies.retrofit.Movie;
 import com.example.leon.phimovies.tabs.RecyclerItemClickListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+
 
 /**
  * Created by Leon on 28.01.2016.
@@ -30,6 +34,7 @@ import butterknife.ButterKnife;
 public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
         RecyclerItemClickListener.OnItemClickListener {
 
+    private static final String KEY_MOVIE = "MOVIE";
     @Bind(R.id.favorite_recycler_view)
     RecyclerView mRecyclerView;
     private CursorRecyclerViewAdapter mAdapter;
@@ -50,6 +55,13 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (toolbar != null) {
+            toolbar.setTitle("Favorite");
+        }
+
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         getLoaderManager().initLoader(R.id.favorite_loader, Bundle.EMPTY, this);
@@ -137,11 +149,11 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
             cursor.moveToPosition(position);
         }
         Movie movie = Movie.fromCursor(cursor);
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack(DetailsFragment.class.getName())
-                .replace(R.id.container_view, DetailsFragment.getInstance(movie))
-                .commit();
+        Intent intent = new Intent(getActivity(), DetailsActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_MOVIE, movie);
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
     @Override

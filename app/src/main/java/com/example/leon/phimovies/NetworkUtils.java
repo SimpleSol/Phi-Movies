@@ -16,7 +16,6 @@ public class NetworkUtils {
     public static final int READ_TIMEOUT = 60;
     public static final int CONNECT_TIMEOUT = 120;
     public static final int WRITE_TIMEOUT = 40;
-    private static final String TAG = NetworkUtils.class.getName();
     private final Retrofit mRetrofit;
 
     private NetworkUtils() {
@@ -24,7 +23,6 @@ public class NetworkUtils {
                 .baseUrl(BuildConfig.API_ENDPOINT)
                 .client(buildClient())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }
 
@@ -37,12 +35,6 @@ public class NetworkUtils {
         client.setReadTimeout(READ_TIMEOUT, TimeUnit.SECONDS);
         client.setConnectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);
         client.setWriteTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS);
-//        client.interceptors().add(chain -> {
-//            Response response = chain.proceed(chain.request());
-//            final HttpUrl httpUrl = chain.request().httpUrl();
-//            Log.d(TAG, "intercept: " + httpUrl.toString());
-//            return response;
-//        });
         return client;
     }
 
