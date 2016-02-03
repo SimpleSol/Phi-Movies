@@ -6,13 +6,15 @@ package com.example.leon.phimovies;
 public class ToDoClass {
 
     // TODO: 02.02.2016 (?) finish()
+    // TODO: 03.02.2016 (?) onCreateView attachToRoot false meaning
 
-    // TODO: 02.02.2016 Navigation Drawer over Toolbar
-    // TODO: 02.02.2016 Dynamic search
-    // TODO: 02.02.2016 ~ TabLayout within Toolbar
     // TODO: 02.02.2016 Actual date in queries
     // TODO: 02.02.2016 Reimplement UNDO within FavoriteFragment's SnackBar
     // TODO: 02.02.2016 Inheritance
+    // TODO: 03.02.2016 Status bar color
+    // TODO: 03.02.2016 Remove add button
+    // TODO: 03.02.2016 Shadows
+    // TODO: 02.02.2016 ~ TabLayout within Toolbar
 
     // TODO: 02.02.2016 Clean the code 
 

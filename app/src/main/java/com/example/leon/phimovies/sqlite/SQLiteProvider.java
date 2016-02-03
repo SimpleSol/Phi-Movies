@@ -91,6 +91,7 @@ public class SQLiteProvider extends ContentProvider {
                             Movie.Columns.POSTER + " TEXT, " +
                             Movie.Columns.RATING + " TEXT, " +
                             Movie.Columns.RELEASE_DATE + " TEXT, " +
+                            Movie.Columns.IS_SHOWING + " TEXT, " +
                             "UNIQUE(" + Movie.Columns.TITLE + ") ON CONFLICT IGNORE);"
             );
         }

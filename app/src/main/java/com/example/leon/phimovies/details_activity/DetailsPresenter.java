@@ -33,6 +33,7 @@ public class DetailsPresenter {
             values.put(Movie.Columns.POSTER, mMovie.getPoster());
             values.put(Movie.Columns.RATING, mMovie.getRating());
             values.put(Movie.Columns.RELEASE_DATE, mMovie.getReleaseDate());
+            values.put(Movie.Columns.IS_SHOWING, "true");
 
             mContext.getContentResolver().insert(Movie.URI, values);
         }

@@ -32,6 +32,16 @@ public class Movie implements Serializable {
     @SerializedName("vote_average")
     private String mRating;
 
+    private String isShowing;
+
+    public String getIsShowing() {
+        return isShowing;
+    }
+
+    public void setIsShowing(String isShowing) {
+        this.isShowing = isShowing;
+    }
+
     public static Movie fromCursor(Cursor cursor) {
         Movie movie = new Movie();
         movie.setTitle(cursor.getString(cursor.getColumnIndex(Columns.TITLE)));
@@ -39,6 +49,7 @@ public class Movie implements Serializable {
         movie.setRating(cursor.getString(cursor.getColumnIndex(Columns.RATING)));
         movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(Columns.RELEASE_DATE)));
         movie.setOverview(cursor.getString(cursor.getColumnIndex(Columns.OVERVIEW)));
+        movie.setIsShowing(cursor.getString(cursor.getColumnIndex(Columns.IS_SHOWING)));
         return movie;
     }
 
@@ -88,5 +99,6 @@ public class Movie implements Serializable {
         String OVERVIEW = "overview";
         String POSTER = "poster";
         String RELEASE_DATE = "release_date";
+        String IS_SHOWING = "is_shoving";
     }
 }

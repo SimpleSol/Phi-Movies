@@ -1,6 +1,7 @@
 package com.example.leon.phimovies.search_result_fragment;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.leon.phimovies.NetworkUtils;
 import com.example.leon.phimovies.retrofit.ApiResults;
@@ -16,6 +17,7 @@ import retrofit.Retrofit;
  */
 public class SearchResultPresenter {
 
+    private static final String TAG = SearchResultFragment.class.getName();
     private final MoviesService mService;
 
     private SearchResultView mView;
@@ -26,6 +28,7 @@ public class SearchResultPresenter {
     }
 
     public void loadingSearchResults(String query, String page, String apiKey) {
+        Log.d(TAG, "loadingSearchResults: query");
         Call<ApiResults> call = mService.getSearchResult(query, page, apiKey);
         call.enqueue(new Callback<ApiResults>() {
             @Override

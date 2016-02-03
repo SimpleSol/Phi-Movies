@@ -18,4 +18,10 @@
 
     </style>
 
+    <style name="stub_text_stub">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+
 </resources>

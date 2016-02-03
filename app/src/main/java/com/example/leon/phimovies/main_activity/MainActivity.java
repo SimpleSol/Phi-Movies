@@ -1,11 +1,13 @@
 package com.example.leon.phimovies.main_activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,6 +15,7 @@ import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.favorite_fragment.FavoriteFragment;
 import com.example.leon.phimovies.main_fragment.MainFragment;
 import com.example.leon.phimovies.search_result_fragment.SearchResultFragment;
+import com.example.leon.phimovies.search_result_fragment.StubSearchFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.Bind;
@@ -22,6 +25,9 @@ import butterknife.ButterKnife;
  * Created by Leon on 25.01.2016.
  */
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getName();
+    private final int QUERY_DELAY = 1000;
 
     @Bind(R.id.search_view)
     MaterialSearchView mSearchView;
@@ -71,21 +77,34 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSearchView() {
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            Handler handler = new Handler();
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getSupportFragmentManager().beginTransaction()
-                        .addToBackStack(SearchResultFragment.class.getName())
-                        .replace(R.id.container_view, SearchResultFragment.getInstance(query))
-                        .commit();
+                searchMovies(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
+                handler.removeCallbacksAndMessages(null);
+                handler.postDelayed(() -> searchMovies(newText), QUERY_DELAY);
                 return false;
             }
         });
+    }
+
+    private void searchMovies(String query) {
+        if (TextUtils.isEmpty(query)) {
+            getSupportFragmentManager().beginTransaction()
+                    .addToBackStack(SearchResultFragment.class.getName())
+                    .replace(R.id.container_view, new StubSearchFragment())
+                    .commit();
+        } else {
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(SearchResultFragment.class.getName())
+                .replace(R.id.container_view, SearchResultFragment.getInstance(query))
+                .commit();
+        }
     }
 
     private void initNavigationView() {
