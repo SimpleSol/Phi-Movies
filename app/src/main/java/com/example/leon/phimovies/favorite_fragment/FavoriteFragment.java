@@ -89,8 +89,6 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
                 Movie movie = mAdapter.getItem(position);
                 String title = movie.getTitle();
                 Context context = getActivity();
-                Cursor cursor = context.getContentResolver().query(Movie.URI, null, null, null, null);
-
                 mAdapter.removeItem(position);
 
                 ContentValues values = new ContentValues();
