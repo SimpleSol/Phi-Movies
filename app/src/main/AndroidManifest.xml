@@ -27,6 +27,9 @@
             android:name=".sqlite.SQLiteProvider"
             android:exported="false"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="acc7ae690f7b596bc98850e8851d7b6d435a7cc1" />
     </application>
 
 </manifest>

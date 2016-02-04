@@ -5,4 +5,6 @@
     <string name="view_navigation_close">Close</string>
     <string name="menu_item_home">Home</string>
     <string name="search_stub">Enter movie title</string>
+    <string name="menu_item_notifications">Notifications</string>
+    <string name="button_notification">kinda button</string>
 </resources>

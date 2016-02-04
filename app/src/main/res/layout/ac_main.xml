@@ -28,7 +28,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         android:background="?attr/colorPrimary"
-                        android:fitsSystemWindows="true"
                         app:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
                     <com.miguelcatalan.materialsearchview.MaterialSearchView
@@ -45,9 +44,9 @@
 
         <FrameLayout
             android:id="@+id/container_view"
-            android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
             android:orientation="vertical" />
 
         <android.support.design.widget.NavigationView
@@ -56,7 +55,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:headerLayout="@layout/navigation_header"
-            app:menu="@menu/menu_navigation" />
+            app:menu="@menu/menu_navigation" >
+
+        </android.support.design.widget.NavigationView>
 
     </android.support.v4.widget.DrawerLayout>
 

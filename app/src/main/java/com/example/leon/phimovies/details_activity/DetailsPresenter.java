@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.retrofit.Movie;
 
 /**
@@ -36,7 +37,7 @@ public class DetailsPresenter {
             newValues.put(Movie.Columns.POSTER, mMovie.getPoster());
             newValues.put(Movie.Columns.RATING, mMovie.getRating());
             newValues.put(Movie.Columns.RELEASE_DATE, mMovie.getReleaseDate());
-            newValues.put(Movie.Columns.IS_SHOWING, "true");
+            newValues.put(Movie.Columns.IS_SHOWING, Constants.TRUE);
 
             if (isDataBaseContains(mMovie)) {
                 mContext.getContentResolver().update(Movie.URI, newValues, Movie.Columns.API_ID + "=?", new String[]{mMovie.getmApiId()});

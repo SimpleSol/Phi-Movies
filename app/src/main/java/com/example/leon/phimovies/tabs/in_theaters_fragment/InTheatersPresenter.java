@@ -26,19 +26,19 @@ public class InTheatersPresenter {
     }
 
     public void loadInTheatersResults(String dateGte, String dateLte, String page, String apiKey) {
-            Call<ApiResults> call = mService.getInTheaters(dateGte, dateLte, page, apiKey);
-            call.enqueue(new Callback<ApiResults>() {
-                @Override
-                public void onResponse(Response<ApiResults> response, Retrofit retrofit) {
-                    ApiResults inTheatersResults = response.body();
-                    mView.putInTheatersData(inTheatersResults.getMovies());
-                }
+        Call<ApiResults> call = mService.getInTheaters(dateGte, dateLte, page, apiKey);
+        call.enqueue(new Callback<ApiResults>() {
+            @Override
+            public void onResponse(Response<ApiResults> response, Retrofit retrofit) {
+                ApiResults inTheatersResults = response.body();
+                mView.putInTheatersData(inTheatersResults.getMovies());
+            }
 
-                @Override
-                public void onFailure(Throwable t) {
+            @Override
+            public void onFailure(Throwable t) {
 
-                }
-            });
+            }
+        });
     }
 
 }

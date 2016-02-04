@@ -16,6 +16,8 @@ import com.example.leon.phimovies.retrofit.Movie;
 import com.example.leon.phimovies.tabs.RecyclerGridAdapter;
 import com.example.leon.phimovies.tabs.RecyclerItemClickListener;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -27,12 +29,12 @@ import butterknife.ButterKnife;
 public class InTheatersFragment extends Fragment implements InTheatersView {
 
     private static final String KEY_MOVIE = "MOVIE";
-    private InTheatersPresenter mPresenter;
-    private int mPage = 1;
-    private GridLayoutManager mGridLayoutManager;
     @Bind(R.id.in_theaters_recycler_view)
     RecyclerView mRecyclerView;
     RecyclerGridAdapter mAdapter;
+    private InTheatersPresenter mPresenter;
+    private int mPage = 1;
+    private GridLayoutManager mGridLayoutManager;
     private boolean mIsLoading = false;
 
     public static InTheatersFragment getInstance() {
@@ -80,7 +82,7 @@ public class InTheatersFragment extends Fragment implements InTheatersView {
         mAdapter = new RecyclerGridAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mPresenter = new InTheatersPresenter(this);
-        mPresenter.loadInTheatersResults("2016-01-01", "2016-01-29", String.valueOf(mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
+        mPresenter.loadInTheatersResults(getDate(true), getDate(false), String.valueOf(mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
 
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -90,7 +92,7 @@ public class InTheatersFragment extends Fragment implements InTheatersView {
                 if (mGridLayoutManager.findLastVisibleItemPosition() > (mAdapter.getItemCount() / 2)
                         && !mIsLoading) {
                     mIsLoading = true;
-                    mPresenter.loadInTheatersResults("2016-01-01", "2016-01-29", String.valueOf(++mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
+                    mPresenter.loadInTheatersResults(getDate(true), getDate(false), String.valueOf(++mPage), "19ebd84dd0335ec8d6d277b2d60e9724");
                 }
             }
 
@@ -114,6 +116,16 @@ public class InTheatersFragment extends Fragment implements InTheatersView {
     public void putInTheatersData(List<Movie> movies) {
         mAdapter.addList(movies);
         mIsLoading = false;
+    }
+
+    private String getDate(boolean startOrEnd) {
+        DateTime dt = DateTime.now();
+        if (startOrEnd) {
+            return dt.minusDays(30).toString("yyyy-MM-dd");
+        } else {
+            return dt.toString("yyy-MM-dd");
+        }
+
     }
 
 }

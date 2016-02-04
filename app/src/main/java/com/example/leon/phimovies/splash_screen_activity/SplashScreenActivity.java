@@ -15,10 +15,9 @@ import com.example.leon.phimovies.main_activity.MainActivity;
  */
 public class SplashScreenActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         // apply fullscreen programmatically
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,

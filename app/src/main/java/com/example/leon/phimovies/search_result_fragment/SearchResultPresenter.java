@@ -17,7 +17,6 @@ import retrofit.Retrofit;
  */
 public class SearchResultPresenter {
 
-    private static final String TAG = SearchResultFragment.class.getName();
     private final MoviesService mService;
 
     private SearchResultView mView;
@@ -28,7 +27,6 @@ public class SearchResultPresenter {
     }
 
     public void loadingSearchResults(String query, String page, String apiKey) {
-        Log.d(TAG, "loadingSearchResults: query");
         Call<ApiResults> call = mService.getSearchResult(query, page, apiKey);
         call.enqueue(new Callback<ApiResults>() {
             @Override

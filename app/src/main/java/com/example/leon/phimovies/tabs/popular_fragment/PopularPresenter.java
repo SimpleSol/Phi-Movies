@@ -16,7 +16,6 @@ import retrofit.Retrofit;
  */
 public class PopularPresenter {
 
-    private static final String TAG = PopularPresenter.class.getName();
     private final MoviesService mService;
 
     private PopularView mView;
@@ -27,19 +26,19 @@ public class PopularPresenter {
     }
 
     public void loadPopularResults(String sortBy, String page, String apiKey) {
-            Call<ApiResults> call = mService.getPopular(sortBy, page, apiKey);
-            call.enqueue(new Callback<ApiResults>() {
-                @Override
-                public void onResponse(Response<ApiResults> response, Retrofit retrofit) {
-                    ApiResults popularResults = response.body();
-                    mView.putPopularData(popularResults.getMovies());
-                }
+        Call<ApiResults> call = mService.getPopular(sortBy, page, apiKey);
+        call.enqueue(new Callback<ApiResults>() {
+            @Override
+            public void onResponse(Response<ApiResults> response, Retrofit retrofit) {
+                ApiResults popularResults = response.body();
+                mView.putPopularData(popularResults.getMovies());
+            }
 
-                @Override
-                public void onFailure(Throwable t) {
+            @Override
+            public void onFailure(Throwable t) {
 
-                }
-            });
+            }
+        });
     }
 
 }

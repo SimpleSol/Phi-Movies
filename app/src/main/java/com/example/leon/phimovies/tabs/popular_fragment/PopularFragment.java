@@ -27,13 +27,12 @@ import butterknife.ButterKnife;
 public class PopularFragment extends Fragment implements PopularView {
 
     private static final String KEY_MOVIE = "MOVIE";
-    private static final String TAG = PopularFragment.class.getName();
-    private PopularPresenter mPresenter;
-    private int mPage = 1;
-    private GridLayoutManager mGridLayoutManager;
     @Bind(R.id.in_theaters_recycler_view)
     RecyclerView mRecyclerView;
     RecyclerGridAdapter mAdapter;
+    private PopularPresenter mPresenter;
+    private int mPage = 1;
+    private GridLayoutManager mGridLayoutManager;
     private boolean mIsLoading = false;
 
     public static PopularFragment getInstance() {

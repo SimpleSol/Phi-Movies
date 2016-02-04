@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 23
@@ -16,7 +31,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField("String","API_ENDPOINT",'"https://api.themoviedb.org"')
+        buildConfigField("String", "API_ENDPOINT", '"https://api.themoviedb.org"')
     }
 
     buildTypes {
@@ -24,29 +39,48 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            // Disable fabric build ID generation for debug builds
+            ext.enableCrashlytics = false
+        }
+
+
+        lintOptions {
+            disable 'InvalidPackage'
+        }
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+        testCompile 'junit:junit:4.12'
+        compile 'com.android.support:appcompat-v7:23.1.1'
+        compile 'com.miguelcatalan:materialsearchview:1.4.0'
+        compile 'com.android.support:cardview-v7:23.1.1'
+        compile 'com.android.support:recyclerview-v7:23.1.1'
+        compile 'com.android.support:design:23.1.1'
+        compile 'com.facebook.fresco:fresco:0.9.0+'
+        compile 'com.jakewharton:butterknife:7.0.1'
+        compile 'com.google.code.gson:gson:2.4'
+        compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+        compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+        compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
+        compile 'com.squareup.okhttp:okhttp:2.7.0'
+        compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
+        compile 'io.reactivex:rxjava:1.1.0'
+        compile 'io.reactivex:rxandroid:1.1.0'
+        compile 'net.danlew:android.joda:2.9.2'
+        compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+            transitive = true;
+        }
+        compile('com.crashlytics.sdk.android:crashlytics-ndk:1.1.2@aar') {
+            transitive = true;
+        }
     }
-}
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.miguelcatalan:materialsearchview:1.4.0'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.facebook.fresco:fresco:0.9.0+'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
-    compile 'com.squareup.okhttp:okhttp:2.7.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'io.reactivex:rxandroid:1.1.0'
+    crashlytics {
+        enableNdk true
+        androidNdkOut 'src/main/obj'
+        androidNdkLibsOut 'src/main/libs'
+    }
 }

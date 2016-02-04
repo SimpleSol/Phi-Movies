@@ -10,10 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.favorite_fragment.FavoriteFragment;
 import com.example.leon.phimovies.main_fragment.MainFragment;
+import com.example.leon.phimovies.notification_fragment.NotificationFragment;
+import com.example.leon.phimovies.retrofit.Movie;
 import com.example.leon.phimovies.search_result_fragment.SearchResultFragment;
 import com.example.leon.phimovies.search_result_fragment.StubSearchFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -35,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-
     @Bind(R.id.navigation)
     NavigationView mNavigationView;
 
@@ -56,18 +59,17 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initSearchView();
         initNavigationView();
-
+        getContentResolver().delete(Movie.URI, Movie.Columns.IS_SHOWING + "=?", new String[]{Constants.FALSE});
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         MenuItem item = menu.findItem(R.id.action_search);
         mSearchView.setMenuItem(item);
-
         return true;
     }
+
 
     private void initToolbar() {
         if (mToolbar != null) {
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private void initSearchView() {
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             Handler handler = new Handler();
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 handler.removeCallbacksAndMessages(null);
@@ -92,6 +95,17 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        mSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+
+            }
+        });
     }
 
     private void searchMovies(String query) {
@@ -101,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.container_view, new StubSearchFragment())
                     .commit();
         } else {
-        getSupportFragmentManager().beginTransaction()
-                .addToBackStack(SearchResultFragment.class.getName())
-                .replace(R.id.container_view, SearchResultFragment.getInstance(query))
-                .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .addToBackStack(SearchResultFragment.class.getName())
+                    .replace(R.id.container_view, SearchResultFragment.getInstance(query))
+                    .commit();
         }
     }
 
@@ -120,20 +134,36 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView.setNavigationItemSelectedListener(item -> {
             mDrawerLayout.closeDrawers();
             switch (item.getItemId()) {
-                case R.id.favorite:
+                case R.id.menu_item_favorite:
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_view, new FavoriteFragment())
                             .commit();
                     break;
-                case R.id.home:
+                case R.id.menu_item_home:
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_view, new MainFragment())
                             .commit();
                     break;
+                case R.id.menu_item_notifications:
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_view, new NotificationFragment())
+                            .commit();
             }
             return true;
         });
 
     }
+
+    public void increaseNotification(int itemId, String count) {
+        Menu menu = mNavigationView.getMenu();
+
+        MenuItem item = menu.findItem(itemId);
+        TextView textView = ((TextView) item.getActionView());
+        if (textView != null) {
+            textView.setText(count);
+        }
+
+    }
+
 
 }

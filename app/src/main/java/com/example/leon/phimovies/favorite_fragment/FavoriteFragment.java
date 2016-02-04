@@ -16,7 +16,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,6 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
         RecyclerItemClickListener.OnItemClickListener {
 
     private static final String KEY_MOVIE = "MOVIE";
-    private static final String TAG = "Swipe Problems";
     @Bind(R.id.favorite_recycler_view)
     RecyclerView mRecyclerView;
     private FavoriteAdapter mAdapter;
@@ -93,12 +91,11 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
                 mAdapter.removeItem(position);
 
                 ContentValues values = new ContentValues();
-                values.put(Movie.Columns.IS_SHOWING, "false");
-                    context.getContentResolver().update(Movie.URI,
-                            values,
-                            Movie.Columns.API_ID + "=?", new String[]{apiId});
+                values.put(Movie.Columns.IS_SHOWING, Constants.FALSE);
+                context.getContentResolver().update(Movie.URI,
+                        values,
+                        Movie.Columns.API_ID + "=?", new String[]{apiId});
 
-                Log.d(TAG, "Delete Item: " + String.valueOf(position));
 
                 Snackbar.make(getView(), "Deleted", Snackbar.LENGTH_LONG)
                         .setAction("Undo", new View.OnClickListener() {
@@ -107,13 +104,12 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
                                 mAdapter.addItem(position, movie);
 
                                 ContentValues values = new ContentValues();
-                                values.put(Movie.Columns.IS_SHOWING, "true");
-                                    context.getContentResolver().update(Movie.URI,
-                                            values,
-                                            Movie.Columns.API_ID + "=?", new String[]{apiId});
+                                values.put(Movie.Columns.IS_SHOWING, Constants.TRUE);
+                                context.getContentResolver().update(Movie.URI,
+                                        values,
+                                        Movie.Columns.API_ID + "=?", new String[]{apiId});
 
 
-                                Log.d(TAG, "Restore Item: " + String.valueOf(position));
                             }
                         }).show();
             }
@@ -139,13 +135,12 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     Movie movie = Movie.fromCursor(cursor);
-                    if (TextUtils.equals(movie.getIsShowing(), "true")) {
+                    if (TextUtils.equals(movie.getIsShowing(), Constants.TRUE)) {
                         movies.add(movie);
                     }
                 } while (cursor.moveToNext());
                 mAdapter.swapList(movies);
             }
-            Log.d(TAG, "onLoadFinished: ");
         }
     }
 

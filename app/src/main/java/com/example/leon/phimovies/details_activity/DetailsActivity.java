@@ -85,7 +85,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     }
 
     @OnClick(R.id.button_add)
-    public void onClick() {
+    void onClick() {
         mPresenter.saveToDataBase();
         finish();
     }
