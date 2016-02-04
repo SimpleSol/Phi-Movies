@@ -29,8 +29,20 @@ public class Movie implements Serializable {
 
     @SerializedName("original_title")
     private String mTitle;
+
     @SerializedName("vote_average")
     private String mRating;
+
+    public String getmApiId() {
+        return mApiId;
+    }
+
+    public void setmApiId(String mApiId) {
+        this.mApiId = mApiId;
+    }
+
+    @SerializedName("id")
+    private String mApiId;
 
     private String isShowing;
 
@@ -44,6 +56,7 @@ public class Movie implements Serializable {
 
     public static Movie fromCursor(Cursor cursor) {
         Movie movie = new Movie();
+        movie.setmApiId(cursor.getString(cursor.getColumnIndex(Columns.API_ID)));
         movie.setTitle(cursor.getString(cursor.getColumnIndex(Columns.TITLE)));
         movie.setPoster(cursor.getString(cursor.getColumnIndex(Columns.POSTER)));
         movie.setRating(cursor.getString(cursor.getColumnIndex(Columns.RATING)));
@@ -94,6 +107,7 @@ public class Movie implements Serializable {
     }
 
     public interface Columns extends BaseColumns {
+        String API_ID = "api_id";
         String TITLE = "title";
         String RATING = "rating";
         String OVERVIEW = "overview";

@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             Handler handler = new Handler();
             @Override
             public boolean onQueryTextSubmit(String query) {
+                handler.removeCallbacksAndMessages(null);
                 searchMovies(query);
                 return true;
             }

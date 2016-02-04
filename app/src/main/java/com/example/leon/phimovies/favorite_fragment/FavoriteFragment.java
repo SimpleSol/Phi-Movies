@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.details_activity.DetailsActivity;
 import com.example.leon.phimovies.retrofit.Movie;
@@ -87,17 +88,15 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 Movie movie = mAdapter.getItem(position);
-                String title = movie.getTitle();
+                String apiId = movie.getmApiId();
                 Context context = getActivity();
                 mAdapter.removeItem(position);
 
                 ContentValues values = new ContentValues();
                 values.put(Movie.Columns.IS_SHOWING, "false");
-//                if (cursor != null && cursor.moveToPosition(position)) {
                     context.getContentResolver().update(Movie.URI,
                             values,
-                            Movie.Columns.TITLE + "=?", new String[]{title});
-//                }
+                            Movie.Columns.API_ID + "=?", new String[]{apiId});
 
                 Log.d(TAG, "Delete Item: " + String.valueOf(position));
 
@@ -109,30 +108,14 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
 
                                 ContentValues values = new ContentValues();
                                 values.put(Movie.Columns.IS_SHOWING, "true");
-//                                if (cursor != null && cursor.moveToPosition(position)) {
                                     context.getContentResolver().update(Movie.URI,
                                             values,
-                                            Movie.Columns.TITLE + "=?", new String[]{title});
-//                                }
+                                            Movie.Columns.API_ID + "=?", new String[]{apiId});
+
 
                                 Log.d(TAG, "Restore Item: " + String.valueOf(position));
                             }
-                        })
-                        .setCallback(new Snackbar.Callback() {
-                            @Override
-                            public void onDismissed(Snackbar snackbar, int event) {
-                                super.onDismissed(snackbar, event);
-                                if (event != Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-//                                    if (cursor != null && cursor.moveToPosition(position)) {
-//                                        context.getContentResolver().delete(Movie.URI,
-//                                                Movie.Columns._ID + "=?",
-//                                                new String[]{cursor.getString(cursor.getColumnIndex(Movie.Columns._ID))});
-//                                        Log.d(TAG, "Delete from Database: " + String.valueOf(position));
-//                                    }
-                                }
-                            }
-                        })
-                        .show();
+                        }).show();
             }
         });
 
@@ -158,10 +141,9 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
                     Movie movie = Movie.fromCursor(cursor);
                     if (TextUtils.equals(movie.getIsShowing(), "true")) {
                         movies.add(movie);
-                        mAdapter.swapList(movies);
                     }
                 } while (cursor.moveToNext());
-
+                mAdapter.swapList(movies);
             }
             Log.d(TAG, "onLoadFinished: ");
         }
@@ -174,16 +156,26 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onItemClick(View childView, int position) {
-        Cursor cursor = getActivity().getContentResolver().query(Movie.URI, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToPosition(position);
-        }
-        Movie movie = Movie.fromCursor(cursor);
+        String apiId = mAdapter.getItem(position).getmApiId();
+        Movie movie = findMovieInDb(apiId);
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_MOVIE, movie);
+        args.putInt(Constants.KEY_IS_FROM_FAVORITE, 1);
         intent.putExtras(args);
         startActivity(intent);
+    }
+
+    private Movie findMovieInDb(String apiId) {
+        Cursor cursor = getActivity().getContentResolver().query(Movie.URI, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                if (TextUtils.equals(apiId, cursor.getString(cursor.getColumnIndex(Movie.Columns.API_ID)))) {
+                    return Movie.fromCursor(cursor);
+                }
+            } while (cursor.moveToNext());
+        }
+        return null;
     }
 
     @Override

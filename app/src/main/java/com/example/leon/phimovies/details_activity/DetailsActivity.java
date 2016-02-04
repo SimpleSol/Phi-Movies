@@ -6,8 +6,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.retrofit.Movie;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -21,7 +24,6 @@ import butterknife.OnClick;
  */
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
-    private static final String KEY_MOVIE = "MOVIE";
     @Bind(R.id.details_poster)
     SimpleDraweeView mPoster;
     @Bind(R.id.details_overview)
@@ -34,6 +36,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     TextView mTitle;
     @Bind(R.id.toolbar_details)
     Toolbar mToolbar;
+    private Button mAddButton;
     private DetailsPresenter mPresenter;
 
     @Override
@@ -42,13 +45,18 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         setTheme(R.style.AppDefault);
         setContentView(R.layout.ac_details);
 
+        mAddButton = (Button) findViewById(R.id.button_add);
+        if (getIntent().getExtras().containsKey(Constants.KEY_IS_FROM_FAVORITE)) {
+            mAddButton.setVisibility(View.GONE);
+        }
+
         ButterKnife.bind(this);
 
         mPresenter = new DetailsPresenter(this, this);
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(KEY_MOVIE)) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Constants.KEY_MOVIE)) {
             Bundle bundle = getIntent().getExtras();
-            Movie movie = (Movie) bundle.getSerializable(KEY_MOVIE);
+            Movie movie = (Movie) bundle.getSerializable(Constants.KEY_MOVIE);
             initToolbar(movie != null ? movie.getTitle() : getString(R.string.app_name));
             mPresenter.initMovieData(movie);
         }

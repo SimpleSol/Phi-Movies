@@ -86,13 +86,14 @@ public class SQLiteProvider extends ContentProvider {
             db.execSQL(
                     "CREATE TABLE IF NOT EXISTS " + Movie.TABLE +
                             "(" + Movie.Columns._ID + " INTEGER PRIMARY KEY, " +
+                            Movie.Columns.API_ID + " TEXT, " +
                             Movie.Columns.TITLE + " TEXT, " +
                             Movie.Columns.OVERVIEW + " TEXT, " +
                             Movie.Columns.POSTER + " TEXT, " +
                             Movie.Columns.RATING + " TEXT, " +
                             Movie.Columns.RELEASE_DATE + " TEXT, " +
                             Movie.Columns.IS_SHOWING + " TEXT, " +
-                            "UNIQUE(" + Movie.Columns.TITLE + ") ON CONFLICT IGNORE);"
+                            "UNIQUE(" + Movie.Columns.API_ID + ") ON CONFLICT IGNORE);"
             );
         }
 

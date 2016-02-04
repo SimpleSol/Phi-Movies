@@ -2,9 +2,11 @@ package com.example.leon.phimovies.details_activity;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.example.leon.phimovies.retrofit.Movie;
 
@@ -27,16 +29,35 @@ public class DetailsPresenter {
 
     public void saveToDataBase() {
         if (mMovie != null) {
-            ContentValues values = new ContentValues();
-            values.put(Movie.Columns.TITLE, mMovie.getTitle());
-            values.put(Movie.Columns.OVERVIEW, mMovie.getOverview());
-            values.put(Movie.Columns.POSTER, mMovie.getPoster());
-            values.put(Movie.Columns.RATING, mMovie.getRating());
-            values.put(Movie.Columns.RELEASE_DATE, mMovie.getReleaseDate());
-            values.put(Movie.Columns.IS_SHOWING, "true");
+            ContentValues newValues = new ContentValues();
+            newValues.put(Movie.Columns.API_ID, mMovie.getmApiId());
+            newValues.put(Movie.Columns.TITLE, mMovie.getTitle());
+            newValues.put(Movie.Columns.OVERVIEW, mMovie.getOverview());
+            newValues.put(Movie.Columns.POSTER, mMovie.getPoster());
+            newValues.put(Movie.Columns.RATING, mMovie.getRating());
+            newValues.put(Movie.Columns.RELEASE_DATE, mMovie.getReleaseDate());
+            newValues.put(Movie.Columns.IS_SHOWING, "true");
 
-            mContext.getContentResolver().insert(Movie.URI, values);
+            if (isDataBaseContains(mMovie)) {
+                mContext.getContentResolver().update(Movie.URI, newValues, Movie.Columns.API_ID + "=?", new String[]{mMovie.getmApiId()});
+            } else {
+                mContext.getContentResolver().insert(Movie.URI, newValues);
+            }
         }
+    }
+
+    private boolean isDataBaseContains(Movie movie) {
+        Cursor cursor = mContext.getContentResolver().query(Movie.URI, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                if (TextUtils.equals(
+                        cursor.getString(cursor.getColumnIndex(Movie.Columns.API_ID)),
+                        movie.getmApiId())) {
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+        return false;
     }
 
     public void initMovieData(Movie movie) {

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.main_activity.MainActivity;
 
@@ -14,7 +15,7 @@ import com.example.leon.phimovies.main_activity.MainActivity;
  */
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 SplashScreenActivity.this.startActivity(intent);
                 SplashScreenActivity.this.finish();
             }
-        }, SPLASH_DISPLAY_LENGTH);
+        }, Constants.SPLASH_DISPLAY_LENGTH);
     }
 }
