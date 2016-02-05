@@ -2,13 +2,10 @@ package com.example.leon.phimovies.details_activity;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
-import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.retrofit.Movie;
 
 /**
@@ -37,28 +34,10 @@ public class DetailsPresenter {
             newValues.put(Movie.Columns.POSTER, mMovie.getPoster());
             newValues.put(Movie.Columns.RATING, mMovie.getRating());
             newValues.put(Movie.Columns.RELEASE_DATE, mMovie.getReleaseDate());
-            newValues.put(Movie.Columns.IS_SHOWING, Constants.TRUE);
+            newValues.put(Movie.Columns.IS_SHOWING, Movie.TRUE);
 
-            if (isDataBaseContains(mMovie)) {
-                mContext.getContentResolver().update(Movie.URI, newValues, Movie.Columns.API_ID + "=?", new String[]{mMovie.getmApiId()});
-            } else {
-                mContext.getContentResolver().insert(Movie.URI, newValues);
-            }
+            mContext.getContentResolver().insert(Movie.URI, newValues);
         }
-    }
-
-    private boolean isDataBaseContains(Movie movie) {
-        Cursor cursor = mContext.getContentResolver().query(Movie.URI, null, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                if (TextUtils.equals(
-                        cursor.getString(cursor.getColumnIndex(Movie.Columns.API_ID)),
-                        movie.getmApiId())) {
-                    return true;
-                }
-            } while (cursor.moveToNext());
-        }
-        return false;
     }
 
     public void initMovieData(Movie movie) {

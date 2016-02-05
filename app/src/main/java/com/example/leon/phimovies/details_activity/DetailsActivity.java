@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.retrofit.Movie;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -23,6 +22,10 @@ import butterknife.OnClick;
  * Created by Тихон on 02.02.2016.
  */
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
+
+    private static final String KEY_MOVIE = "MOVIE";
+    private static final String KEY_IS_FROM_FAVORITE = "IS_FROM_FAVORITE_FRAGMENT";
+
 
     @Bind(R.id.details_poster)
     SimpleDraweeView mPoster;
@@ -46,7 +49,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         setContentView(R.layout.ac_details);
 
         mAddButton = (Button) findViewById(R.id.button_add);
-        if (getIntent().getExtras().containsKey(Constants.KEY_IS_FROM_FAVORITE)) {
+        if (getIntent().getExtras().containsKey(KEY_IS_FROM_FAVORITE)) {
             mAddButton.setVisibility(View.GONE);
         }
 
@@ -54,9 +57,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
         mPresenter = new DetailsPresenter(this, this);
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Constants.KEY_MOVIE)) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(KEY_MOVIE)) {
             Bundle bundle = getIntent().getExtras();
-            Movie movie = (Movie) bundle.getSerializable(Constants.KEY_MOVIE);
+            Movie movie = (Movie) bundle.getSerializable(KEY_MOVIE);
             initToolbar(movie != null ? movie.getTitle() : getString(R.string.app_name));
             mPresenter.initMovieData(movie);
         }

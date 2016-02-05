@@ -21,9 +21,10 @@ import butterknife.ButterKnife;
  */
 public class RecyclerGridAdapter extends RecyclerView.Adapter<RecyclerGridAdapter.ViewHolder> {
 
-    private List<Movie> mMovies = new ArrayList<>();
+    private List<Movie> mMovies;
 
     public RecyclerGridAdapter() {
+        mMovies = new ArrayList<>();
     }
 
     @Override

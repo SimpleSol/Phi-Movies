@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.details_activity.DetailsActivity;
 import com.example.leon.phimovies.retrofit.Movie;
@@ -39,7 +38,9 @@ import butterknife.ButterKnife;
 public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
         RecyclerItemClickListener.OnItemClickListener {
 
+    private static final String KEY_IS_FROM_FAVORITE = "IS_FROM_FAVORITE_FRAGMENT";
     private static final String KEY_MOVIE = "MOVIE";
+
     @Bind(R.id.favorite_recycler_view)
     RecyclerView mRecyclerView;
     private FavoriteAdapter mAdapter;
@@ -68,6 +69,7 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
             toolbar.setTitle("Favorite");
         }
 
+
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         getLoaderManager().initLoader(R.id.favorite_loader, Bundle.EMPTY, this);
@@ -91,7 +93,7 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
                 mAdapter.removeItem(position);
 
                 ContentValues values = new ContentValues();
-                values.put(Movie.Columns.IS_SHOWING, Constants.FALSE);
+                values.put(Movie.Columns.IS_SHOWING, Movie.FALSE);
                 context.getContentResolver().update(Movie.URI,
                         values,
                         Movie.Columns.API_ID + "=?", new String[]{apiId});
@@ -104,7 +106,7 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
                                 mAdapter.addItem(position, movie);
 
                                 ContentValues values = new ContentValues();
-                                values.put(Movie.Columns.IS_SHOWING, Constants.TRUE);
+                                values.put(Movie.Columns.IS_SHOWING, Movie.TRUE);
                                 context.getContentResolver().update(Movie.URI,
                                         values,
                                         Movie.Columns.API_ID + "=?", new String[]{apiId});
@@ -121,6 +123,12 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().getContentResolver().delete(Movie.URI, Movie.Columns.IS_SHOWING + "=?", new String[]{Movie.FALSE});
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (id == R.id.favorite_loader) {
             return new FavoriteLoader(getActivity().getApplicationContext());
@@ -132,13 +140,13 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (loader.getId() == R.id.favorite_loader) {
             List<Movie> movies = new ArrayList<>();
-            if (cursor != null && cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToLast()) {
                 do {
                     Movie movie = Movie.fromCursor(cursor);
-                    if (TextUtils.equals(movie.getIsShowing(), Constants.TRUE)) {
+                    if (TextUtils.equals(movie.getIsShowing(), Movie.TRUE)) {
                         movies.add(movie);
                     }
-                } while (cursor.moveToNext());
+                } while (cursor.moveToPrevious());
                 mAdapter.swapList(movies);
             }
         }
@@ -156,19 +164,23 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_MOVIE, movie);
-        args.putInt(Constants.KEY_IS_FROM_FAVORITE, 1);
+        args.putInt(KEY_IS_FROM_FAVORITE, 1);
         intent.putExtras(args);
         startActivity(intent);
     }
 
     private Movie findMovieInDb(String apiId) {
         Cursor cursor = getActivity().getContentResolver().query(Movie.URI, null, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                if (TextUtils.equals(apiId, cursor.getString(cursor.getColumnIndex(Movie.Columns.API_ID)))) {
-                    return Movie.fromCursor(cursor);
-                }
-            } while (cursor.moveToNext());
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    if (TextUtils.equals(apiId, cursor.getString(cursor.getColumnIndex(Movie.Columns.API_ID)))) {
+                        return Movie.fromCursor(cursor);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) cursor.close();
         }
         return null;
     }

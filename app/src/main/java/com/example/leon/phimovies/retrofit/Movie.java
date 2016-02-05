@@ -14,6 +14,9 @@ import java.io.Serializable;
  */
 public class Movie implements Serializable {
 
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
+
     public static final String TABLE = "movies";
 
     public static final Uri URI = Uri.parse("content://" + SQLiteProvider.AUTHORITY + "/" + TABLE);
@@ -32,27 +35,9 @@ public class Movie implements Serializable {
 
     @SerializedName("vote_average")
     private String mRating;
-
-    public String getmApiId() {
-        return mApiId;
-    }
-
-    public void setmApiId(String mApiId) {
-        this.mApiId = mApiId;
-    }
-
     @SerializedName("id")
     private String mApiId;
-
     private String isShowing;
-
-    public String getIsShowing() {
-        return isShowing;
-    }
-
-    public void setIsShowing(String isShowing) {
-        this.isShowing = isShowing;
-    }
 
     public static Movie fromCursor(Cursor cursor) {
         Movie movie = new Movie();
@@ -64,6 +49,22 @@ public class Movie implements Serializable {
         movie.setOverview(cursor.getString(cursor.getColumnIndex(Columns.OVERVIEW)));
         movie.setIsShowing(cursor.getString(cursor.getColumnIndex(Columns.IS_SHOWING)));
         return movie;
+    }
+
+    public String getmApiId() {
+        return mApiId;
+    }
+
+    public void setmApiId(String mApiId) {
+        this.mApiId = mApiId;
+    }
+
+    public String getIsShowing() {
+        return isShowing;
+    }
+
+    public void setIsShowing(String isShowing) {
+        this.isShowing = isShowing;
     }
 
     public String getRating() {

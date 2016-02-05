@@ -2,6 +2,7 @@ package com.example.leon.phimovies.main_activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,12 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.leon.phimovies.Constants;
 import com.example.leon.phimovies.R;
 import com.example.leon.phimovies.favorite_fragment.FavoriteFragment;
 import com.example.leon.phimovies.main_fragment.MainFragment;
 import com.example.leon.phimovies.notification_fragment.NotificationFragment;
-import com.example.leon.phimovies.retrofit.Movie;
 import com.example.leon.phimovies.search_result_fragment.SearchResultFragment;
 import com.example.leon.phimovies.search_result_fragment.StubSearchFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -59,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initSearchView();
         initNavigationView();
-        getContentResolver().delete(Movie.URI, Movie.Columns.IS_SHOWING + "=?", new String[]{Constants.FALSE});
+
+
     }
 
     @Override
@@ -96,16 +96,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-
-            }
-        });
     }
 
     private void searchMovies(String query) {
@@ -154,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void increaseNotification(int itemId, String count) {
+    public void increaseNotification(@IdRes int itemId, String count) {
         Menu menu = mNavigationView.getMenu();
 
         MenuItem item = menu.findItem(itemId);
