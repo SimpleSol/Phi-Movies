@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -53,12 +54,14 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
         return inflater.inflate(R.layout.fmt_favorite, container, false);
     }
 
+    @CallSuper
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
     }
 
+    @CallSuper
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -139,7 +142,7 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (loader.getId() == R.id.favorite_loader) {
-            List<Movie> movies = new ArrayList<>();
+            List<Movie> movies = new ArrayList<>(50);
             if (cursor != null && cursor.moveToLast()) {
                 do {
                     Movie movie = Movie.fromCursor(cursor);

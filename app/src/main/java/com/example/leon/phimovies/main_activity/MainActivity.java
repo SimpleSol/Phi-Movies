@@ -2,6 +2,7 @@ package com.example.leon.phimovies.main_activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -41,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.navigation)
     NavigationView mNavigationView;
 
+    @CallSuper
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppDefault);
         setContentView(R.layout.ac_main);
 
         ButterKnife.bind(this);
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initSearchView();
         initNavigationView();
-
 
     }
 

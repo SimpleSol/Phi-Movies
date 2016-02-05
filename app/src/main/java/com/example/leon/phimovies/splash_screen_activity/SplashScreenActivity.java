@@ -3,6 +3,7 @@ package com.example.leon.phimovies.splash_screen_activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.CallSuper;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
@@ -14,8 +15,9 @@ import com.example.leon.phimovies.main_activity.MainActivity;
  */
 public class SplashScreenActivity extends AppCompatActivity {
 
-    public static final int SPLASH_DISPLAY_LENGTH = 3000;
+    public static final int SPLASH_DISPLAY_LENGTH = 0;
 
+    @CallSuper
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

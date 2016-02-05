@@ -2,6 +2,7 @@ package com.example.leon.phimovies.details_activity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,10 +43,10 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     private Button mAddButton;
     private DetailsPresenter mPresenter;
 
+    @CallSuper
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppDefault);
         setContentView(R.layout.ac_details);
 
         mAddButton = (Button) findViewById(R.id.button_add);
