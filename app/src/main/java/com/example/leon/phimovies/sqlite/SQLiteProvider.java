@@ -21,7 +21,7 @@ public class SQLiteProvider extends ContentProvider {
 
     public static final String AUTHORITY = BuildConfig.APPLICATION_ID;
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_NAME = "movies.db";
 

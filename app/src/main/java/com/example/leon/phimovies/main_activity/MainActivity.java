@@ -19,7 +19,6 @@ import com.example.leon.phimovies.favorite_fragment.FavoriteFragment;
 import com.example.leon.phimovies.main_fragment.MainFragment;
 import com.example.leon.phimovies.notification_fragment.NotificationFragment;
 import com.example.leon.phimovies.search_result_fragment.SearchResultFragment;
-import com.example.leon.phimovies.search_result_fragment.StubSearchFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.Bind;
@@ -99,14 +98,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void searchMovies(String query) {
-        if (TextUtils.isEmpty(query)) {
+        if (!TextUtils.isEmpty(query)) {
             getSupportFragmentManager().beginTransaction()
-                    .addToBackStack(SearchResultFragment.class.getName())
-                    .replace(R.id.container_view, new StubSearchFragment())
-                    .commit();
-        } else {
-            getSupportFragmentManager().beginTransaction()
-                    .addToBackStack(SearchResultFragment.class.getName())
                     .replace(R.id.container_view, SearchResultFragment.getInstance(query))
                     .commit();
         }
